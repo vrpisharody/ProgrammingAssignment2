@@ -19,18 +19,27 @@ matrix.inv<-function(x=matrix()) cacheSolve(makeCacheMatrix(x))
 
 makeCacheMatrix <- function(x = matrix()) {
     I <- NULL
+    
+## Function to set X to cache    
     set <- function(y) {
         x <<- y
         I <<- NULL
     }
+
+## Function to get input matrix
     get <- function() x
+
+## Funtion to set the inverse of matrix to cache
     setinverse <- function(inverse) I <<- inverse
+
+## Function to get the inverse of matrix from cache
     getinverse <- function() I
+    
+## List converting input matrix to special matrix
     list(set = set, get = get,
          setinverse = setinverse,
          getinverse = getinverse)
 }
-
 
 ## Function cacheSolve checks for the cached Inverse of the 
 ## special "matrix" created with the above function. If so, it gets 
@@ -45,8 +54,13 @@ cacheSolve <- function(x, ...) {
         message("getting cached inverse of matrix")
         return(I)
     }
+   
+## Call input matrix
     data <- x$get()
+## Calcualte the inverse of the matrix
     I <- solve(data, ...)
+## Set the matrix inverse to cache    
     x$setinverse(I)
+## Print inverse to screen    
     I
 }
