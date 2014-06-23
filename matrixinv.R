@@ -16,8 +16,7 @@ matrix.inv<-function(x=matrix()) {
     if(det(x)==0) stop("Matrix is singular,input non-singular matrix")
     
     
-## Convert input matrix to a special "matrix", which is really 
-## a list containing functions to :
+## Define Following function :
 ##    set the value of the matrix
 ##    get the value of the matrix
 ##    set the value of the inverse
@@ -31,9 +30,7 @@ matrix.inv<-function(x=matrix()) {
     get <- function() x
     setinverse <- function(inverse) I <<- inverse
     getinverse <- function() I
-    inv.lst=list(set = set, get = get,
-         setinverse = setinverse,
-    getinverse = getinverse)
+
 
 ## Check for the cached Inverse of the special "matrix" 
 ## created with the above function. If so, it gets 
@@ -42,13 +39,13 @@ matrix.inv<-function(x=matrix()) {
 ## the Inverse in the cache and returns the inverse
 
     ## Return a matrix that is the inverse of 'x'
-    Inv <- inv.lst$getinverse()
-    if(!is.null(Inv)) {
+    I <- getinverse()
+    if(!is.null(I)) {
         message("getting cached inverse of matrix")
-        return(Inv)
+        return(I)
     }
-    data <- inv.lst$get()
-    Inv<- solve(data)
-    inv.lst$setinverse(Inv)
-    Inv
+    data <- get()
+    I<- solve(data)
+    setinverse(I)
+    I
 }
